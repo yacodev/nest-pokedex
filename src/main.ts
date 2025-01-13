@@ -1,6 +1,5 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { asapScheduler } from 'rxjs';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
@@ -12,6 +11,11 @@ async function bootstrap() {
     new ValidationPipe({
       whitelist: true,
       forbidNonWhitelisted: true,
+      // transform the incoming payload to the DTO instance
+      transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
     }),
   );
   await app.listen(process.env.PORT ?? 3000);
